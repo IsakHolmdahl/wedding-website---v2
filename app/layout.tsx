@@ -4,9 +4,8 @@ import { Suspense } from "react"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Sarah & James Wedding",
-  description: "Join us as we celebrate our love on June 15, 2024",
-  generator: "v0.app",
+  title: "Viktoria & Isaks bröllop",
+  description: "Join us as we celebrate our love on August 8, 2025",
 }
 
 export default function RootLayout({
@@ -15,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="snap-y snap-proximity">
       <body className="font-sans">
         <Suspense fallback={null}>{children}</Suspense>
       </body>
