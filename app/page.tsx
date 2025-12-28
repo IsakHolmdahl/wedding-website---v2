@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Heart, Calendar, MapPin, Users, Camera, Gift, Menu, X } from "lucide-react"
+import { Heart, Calendar, MapPin, Users, Camera, Gift, Menu, X, Underline } from "lucide-react"
 import Link from "next/link"
 
 const sections = [
@@ -112,19 +112,19 @@ export default function WeddingWebsite() {
 							<CardHeader>
 								<CardTitle className="flex items-center gap-3 text-xl sm:text-2xl">
 									<Heart className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
-									Our Story
+									Vår Historia
 								</CardTitle>
 							</CardHeader>
-							<CardContent className="space-y-4 grid grid-cols-4">
+							<CardContent className="space-y-4 grid grid-cols-4 text-sm">
 								<div className="col-span-3">
-									<p className="text-black leading-relaxed text-sm sm:text-base">
+									<p className=" sm:text-base">
 										Våren 2014 blev Viktorias idrottslärare sjukskriven och en vikare fick hoppa in. 
 										Vikarien gav eleverna en uppgift: att testa något nytt. Eftersom vikaren var fäkttränare så lockade det 
 										Viktoria och hennes vänner att testa just fäktning. Väl på klubben fick Viktoria syn på Isak. Efter första 
 										träningen gick Viktoria och vännerna iväg mot bussen. De hinner inte långt innan Viktoria säger:</p>
-										<p className="text-black leading-relaxed text-sm sm:text-base py-3"><i>"Han den där med brunt hår och bruna ögon, han var söt".</i></p>
+										<p className=" sm:text-base py-3"><i>"Han den där med brunt hår och bruna ögon, han var söt".</i></p>
 
-									<p className="text-black leading-relaxed text-sm sm:text-base">
+									<p className=" sm:text-base">
 										Så vi villa säga tack till vikarien som oväntat kom in och samanfogade våra vägar. I 12 år har vi	varit på denna resan och i augusti ska vi föreviga vår kärlek tillsammans med er!
 									</p>
 								</div>
@@ -143,13 +143,13 @@ export default function WeddingWebsite() {
 						<div className="w-3/4 h-px bg-gray-300"></div>
 					</div>
 
-					{/* Kyrka */}
+					{/* ceremony */}
 					<section id="wedding-details" className="scroll-mt-8 py-8 sm:py-16 ">
 						<Card className="bg-white border-0 shadow-none">
 							<CardHeader>
 								<CardTitle className="flex items-center gap-3 text-xl sm:text-2xl">
 									<Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
-									Kyrka
+									Vigsel
 								</CardTitle>
 							</CardHeader>
 							<CardContent className="relative flex ">
@@ -160,10 +160,12 @@ export default function WeddingWebsite() {
 										className="w-full h-auto"
 									/>
 								</div>
-								<div className="text-right">
-									<p className="text-black leading-relaxed text-sm sm:text-base">
-										Vigsel sker på Öland kl 14:00
-									</p>
+								<div className="">
+									<ul className=" space-y-3">
+										<li>Vigseln sker i Sandby kyrka på Öland kl 14:00</li>
+										<li className="">Adress: Sandby kyrka Färjestaden</li>
+										<li>Du kan antingen köra dit, eller åka med <a href="#buss" className=" text-blue-600 text"><u>vår buss</u></a>.</li>
+									</ul>
 								</div>
 							</CardContent>
 						</Card>
@@ -179,21 +181,15 @@ export default function WeddingWebsite() {
 							<CardHeader>
 								<CardTitle className="flex items-center gap-3 text-xl sm:text-2xl">
 									<MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
-									Mottagning
+									Bröllopsfest
 								</CardTitle>
 							</CardHeader>
 							<CardContent>
-								<div className="space-y-4">
-									<div>
-										<h3 className="font-semibold text-base sm:text-lg text-black">Sunset Gardens & Grand Ballroom</h3>
-										<p className="text-black text-sm sm:text-base">123 Garden Lane, Beautiful City, BC 12345</p>
-									</div>
-									<p className="text-black leading-relaxed text-sm sm:text-base">
-										A stunning venue with beautiful gardens for our ceremony and an elegant ballroom for our reception.
-										The venue offers ample parking and is easily accessible for all our guests.
-									</p>
-									<Button className="" variant="default">Get Directions</Button>
-								</div>
+							<p>
+								Efter vigseln beger vi oss till Skällby Loge för att fira tillsammans med mat, dryck och dans!
+								<br />
+								Adress: Skällbyallén 7, Kalmar
+							</p>
 							</CardContent>
 						</Card>
 					</section>
@@ -201,6 +197,81 @@ export default function WeddingWebsite() {
 					<div className="flex justify-center">
 						<div className="w-3/4 h-px bg-gray-300"></div>
 					</div>
+
+					{/* Buss */}
+					<section id="buss" className="scroll-mt-8 py-8 sm:py-16 ">
+						<Card className="bg-white border-0 shadow-none">
+							<CardHeader>
+								<CardTitle className="flex items-center gap-3 text-xl sm:text-2xl">
+									<MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
+									Buss
+								</CardTitle>
+							</CardHeader>
+							<CardContent>
+									<p className=" sm:text-base">
+										Vi har bokat buss som åker från Kalmar till Sandby kyrka och sedan till bröllopsfesten i Skällby Loge.
+										Bussen avgår från Kalmar centralstation kl 13:00.
+										Anmäl ditt intresse att åka med bussen när du OSA:ar!
+									</p>
+							</CardContent>
+						</Card>
+					</section>
+
+					<div className="flex justify-center">
+						<div className="w-3/4 h-px bg-gray-300"></div>
+					</div>
+
+					<div className="flex justify-center">
+						<div className="w-3/4 h-px bg-gray-300"></div>
+					</div>
+
+					{/* speech */}
+					<section id="speech" className="scroll-mt-8 py-8 sm:py-16 ">
+						<Card className="bg-white border-0 shadow-none">
+							<CardHeader>
+								<CardTitle className="flex items-center gap-3 text-xl sm:text-2xl">
+									<MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
+									Hålla tal
+								</CardTitle>
+							</CardHeader>
+							<CardContent>
+									<p className=" sm:text-base">
+										Vi älskar tal! Vill du hålla ett tal under middagen? Kontakta då våra toastmasters, Johanna och Otto, på denna mail:
+										<br />
+										<a href="mailto:toastmasters@example.com" className="text-blue-600 underline">toastmasters@example.com</a>
+										<br />
+									</p>
+							</CardContent>
+						</Card>
+					</section>
+
+					<div className="flex justify-center">
+						<div className="w-3/4 h-px bg-gray-300"></div>
+					</div>
+
+					{/* kids */}
+					<section id="kids" className="scroll-mt-8 py-8 sm:py-16 ">
+						<Card className="bg-white border-0 shadow-none">
+							<CardHeader>
+								<CardTitle className="flex items-center gap-3 text-xl sm:text-2xl">
+									<MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
+									Barn
+								</CardTitle>
+							</CardHeader>
+							<CardContent>
+									<p className=" sm:text-base">
+										Vi har valt att hålla vår bröllopsfest barnfri. Barn är hjärtligt välkomna till vigseln i kyrkan,
+										men får tyvärr stanna hemma under festen. Undantag görs såklart för de allra minsta.
+									</p>
+							</CardContent>
+						</Card>
+					</section>
+
+					<div className="flex justify-center">
+						<div className="w-3/4 h-px bg-gray-300"></div>
+					</div>
+
+					
 
 					{/* Wedding Party */}
 					<section id="wedding-party" className="scroll-mt-8 py-8 sm:py-16 ">

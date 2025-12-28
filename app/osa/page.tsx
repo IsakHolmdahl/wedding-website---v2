@@ -51,7 +51,7 @@ export default function osa() {
       <CardHeader>
         <CardTitle>OSA</CardTitle>
         <CardDescription>
-          Ska du OSA för flera? Skicka då gärna in separata svar för varje person        
+          Ska du OSA för flera? Skicka då in separata svar för varje person        
         </CardDescription>
       </CardHeader>
     <CardContent>
@@ -64,8 +64,10 @@ export default function osa() {
             <FieldLegend>Email</FieldLegend>
             <FieldDescription>Mailaddressen används <b>endast</b> för att skicka ett bekräftelsemail</FieldDescription>
             <Input type='email' id='email' {...register('email', {required: true})} />
+			<FieldGroup>
             <FieldLegend>Kommer ni?</FieldLegend>
-            <Checkbox id='attending' defaultChecked={true} {...register('attending')} />
+            	<Checkbox id='attending' defaultChecked={true} {...register('attending')} />
+			</FieldGroup>
           {/* <FieldSet hidden={!watch('attending')}>
             <FieldLegend>Kommer ni endast vara med vid vigseln?</FieldLegend>
             <Checkbox id='onlyCeremony' {...register('onlyCeremony')} />
