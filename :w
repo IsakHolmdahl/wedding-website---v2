@@ -1,10 +1,8 @@
 "use client"
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Field, FieldDescription, FieldGroup, FieldLegend } from '@/components/ui/field'
+import { Field, FieldDescription, FieldGroup, FieldLegend, FieldSet } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
-import { Label } from '@radix-ui/react-label'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 
@@ -67,17 +65,19 @@ export default function osa() {
 								<Input type='email' id='email' {...register('email', { required: true })} />
 							</Field>
 							<Field>
-								<RadioGroup>
-									<FieldLegend>Kommer du?</FieldLegend>
-									<div className="flex items-center gap-3">
-										<RadioGroupItem value="default" id="r1" />
-										<Label htmlFor="r1">Jag kommer</Label>
-									</div>
-									<div className="flex items-center gap-3">
-										<RadioGroupItem value="comfortable" id="r2" />
-										<Label htmlFor="r2">Jag kommer inte</Label>
-									</div>
-								</RadioGroup>
+								<FieldLegend>Kommer du?</FieldLegend>
+								<Controller
+									name="attending"
+									control={control}
+									defaultValue={false}
+									render={({ field }) => (
+										<Checkbox
+											id='attending'
+											checked={field.value}
+											onCheckedChange={field.onChange}
+										/>
+									)}
+								/>
 							</Field>
 							<FieldGroup className='' hidden={!watch('attending')}>
 								<Field>
@@ -100,7 +100,7 @@ export default function osa() {
 									<Input type='text' id='foodPreferences' {...register('foodPreferences')} />
 								</Field>
 							</FieldGroup>
-							<Button className='w-40 mx-auto' type='submit'>Skicka</Button>
+							<Button className='w-20' type='submit'>Skicka</Button>
 						</FieldGroup>
 					</form>
 				</div>
