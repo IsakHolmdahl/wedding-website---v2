@@ -118,14 +118,14 @@ export default function WeddingWebsite() {
 							<CardContent className="space-y-4 grid grid-cols-4 text-sm">
 								<div className="col-span-3">
 									<p className=" sm:text-base">
-										Våren 2014 blev Viktorias idrottslärare sjukskriven och en vikare fick hoppa in. 
-										Vikarien gav eleverna en uppgift: att testa något nytt. Eftersom vikaren var fäkttränare så lockade det 
-										Viktoria och hennes vänner att testa just fäktning. Väl på klubben fick Viktoria syn på Isak. Efter första 
+										Våren 2014 blev Viktorias idrottslärare sjukskriven och en vikare fick hoppa in.
+										Vikarien gav eleverna en uppgift: att testa något nytt. Eftersom vikaren var fäkttränare så lockade det
+										Viktoria och hennes vänner att testa just fäktning. Väl på klubben fick Viktoria syn på Isak. Efter första
 										träningen gick Viktoria och vännerna iväg mot bussen. De hinner inte långt innan Viktoria säger:</p>
-										<p className=" sm:text-base py-3"><i>"Han den där med brunt hår och bruna ögon, han var söt".</i></p>
+									<p className=" sm:text-base py-3"><i>"Han den där med brunt hår och bruna ögon, han var söt".</i></p>
 
 									<p className=" sm:text-base">
-										Så vi villa säga tack till vikarien som oväntat kom in och samanfogade våra vägar. I 12 år har vi	varit på denna resan och i augusti ska vi föreviga vår kärlek tillsammans med er!
+										Så vi vill säga tack till vikarien som oväntat kom in och samanfogade våra vägar. I 12 år har vi	varit på denna resan och i augusti ska vi föreviga vår kärlek tillsammans med er!
 									</p>
 								</div>
 								<div className="col-span-1">
@@ -185,11 +185,11 @@ export default function WeddingWebsite() {
 								</CardTitle>
 							</CardHeader>
 							<CardContent>
-							<p>
-								Efter vigseln beger vi oss till Skällby Loge för att fira tillsammans med mat, dryck och dans!
-								<br />
-								Adress: Skällbyallén 7, Kalmar
-							</p>
+								<p>
+									Efter vigseln beger vi oss till Skällby Loge för att fira tillsammans med mat, dryck och dans!
+									<br />
+									Adress: Skällbyallén 7, Kalmar
+								</p>
 							</CardContent>
 						</Card>
 					</section>
@@ -208,11 +208,11 @@ export default function WeddingWebsite() {
 								</CardTitle>
 							</CardHeader>
 							<CardContent>
-									<p className=" sm:text-base">
-										Vi har bokat buss som åker från Kalmar till Sandby kyrka och sedan till bröllopsfesten i Skällby Loge.
-										Bussen avgår från Kalmar centralstation kl 13:00.
-										Anmäl ditt intresse att åka med bussen när du OSA:ar!
-									</p>
+								<p className=" sm:text-base">
+									Vi har bokat buss som åker från Kalmar till Sandby kyrka och sedan till bröllopsfesten i Skällby Loge.
+									Bussen avgår från Kalmar centralstation kl 13:00.
+									Anmäl ditt intresse att åka med bussen när du OSA:ar!
+								</p>
 							</CardContent>
 						</Card>
 					</section>
@@ -235,12 +235,12 @@ export default function WeddingWebsite() {
 								</CardTitle>
 							</CardHeader>
 							<CardContent>
-									<p className=" sm:text-base">
-										Vi älskar tal! Vill du hålla ett tal under middagen? Kontakta då våra toastmasters, Johanna och Otto, på denna mail:
-										<br />
-										<a href="mailto:toastmasters@example.com" className="text-blue-600 underline">toastmasters@example.com</a>
-										<br />
-									</p>
+								<p className=" sm:text-base">
+									Vi älskar tal! Vill du hålla ett tal under middagen? Kontakta då våra toastmasters, Johanna och Otto, på denna mail:
+									<br />
+									<a href="mailto:toastmaster@viktoria-isak.se" className="text-blue-600 underline">toastmaster@viktoria-isak.se</a>
+									<br />
+								</p>
 							</CardContent>
 						</Card>
 					</section>
@@ -259,10 +259,10 @@ export default function WeddingWebsite() {
 								</CardTitle>
 							</CardHeader>
 							<CardContent>
-									<p className=" sm:text-base">
-										Vi har valt att hålla vår bröllopsfest barnfri. Barn är hjärtligt välkomna till vigseln i kyrkan,
-										men får tyvärr stanna hemma under festen. Undantag görs såklart för de allra minsta.
-									</p>
+								<p className=" sm:text-base">
+									Vi har valt att hålla vår bröllopsfest barnfri. Barn är hjärtligt välkomna till vigseln i kyrkan,
+									men får tyvärr stanna hemma under festen. Undantag görs såklart för de allra minsta.
+								</p>
 							</CardContent>
 						</Card>
 					</section>
@@ -271,7 +271,7 @@ export default function WeddingWebsite() {
 						<div className="w-3/4 h-px bg-gray-300"></div>
 					</div>
 
-					
+
 
 					{/* Wedding Party */}
 					<section id="wedding-party" className="scroll-mt-8 py-8 sm:py-16 ">
