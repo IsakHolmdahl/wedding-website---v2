@@ -42,8 +42,8 @@ export default function osa() {
 
 	return (
 		<main className="min-h-screen">
-			<div className='m-5 bg-neutral-50 mt-[200] pt-14 relative'>
-				<header className="absolute top-[-180] left-0 right-0">
+			<div className='m-5 relative'>
+				<header className="">
 					<img
 						src="logga.png"
 						alt="Viktoria & Isak"
@@ -58,40 +58,52 @@ export default function osa() {
 					<form className='w-full' onSubmit={handleSubmit(onSubmit)}>
 						<FieldGroup className='' id="user">
 							<Field className="gap-0">
-								<FieldLegend>Namn</FieldLegend>
-								<Input type='text' id='name' {...register('name', { required: true })} />
+								<FieldLegend>Namn *</FieldLegend>
+								<Input type='text' id='name' {...register('name', { required: true })} required />
 							</Field>
 							<Field>
-								<FieldLegend>Email</FieldLegend>
+								<FieldLegend>Email *</FieldLegend>
 								<FieldDescription>Mailaddressen används <b>endast</b> för att skicka ett bekräftelsemail</FieldDescription>
-								<Input type='email' id='email' {...register('email', { required: true })} />
+								<Input type='email' id='email' {...register('email', { required: true })} required />
 							</Field>
 							<Field>
-								<RadioGroup>
-									<FieldLegend>Kommer du?</FieldLegend>
-									<div className="flex items-center gap-3">
-										<RadioGroupItem value="default" id="r1" />
-										<Label htmlFor="r1">Jag kommer</Label>
-									</div>
-									<div className="flex items-center gap-3">
-										<RadioGroupItem value="comfortable" id="r2" />
-										<Label htmlFor="r2">Jag kommer inte</Label>
-									</div>
-								</RadioGroup>
+								<FieldLegend>Kommer du? *</FieldLegend>
+								<Controller
+									name="attending"
+									control={control}
+									rules={{ required: true }}
+									render={({ field }) => (
+										<RadioGroup value={field.value === undefined ? undefined : field.value ? "ja" : "nej"} onValueChange={(value) => field.onChange(value === "ja")}>
+											<div className="flex items-center gap-3">
+												<RadioGroupItem value="ja" id="r1" />
+												<Label htmlFor="r1">Jag kommer</Label>
+											</div>
+											<div className="flex items-center gap-3">
+												<RadioGroupItem value="nej" id="r2" />
+												<Label htmlFor="r2">Jag kommer inte</Label>
+											</div>
+										</RadioGroup>
+									)}
+								/>
 							</Field>
 							<FieldGroup className='' hidden={!watch('attending')}>
 								<Field>
-									<FieldLegend>Ska du åka med bussen?</FieldLegend>
+									<FieldLegend>Ska du åka med bussen? *</FieldLegend>
 									<Controller
 										name="rideBus"
 										control={control}
-										defaultValue={false}
+										rules={{ required: true }}
 										render={({ field }) => (
-											<Checkbox
-												id='bus'
-												checked={field.value}
-												onCheckedChange={field.onChange}
-											/>
+											<RadioGroup value={field.value === undefined ? undefined : field.value ? "ja" : "nej"} onValueChange={(value) => field.onChange(value === "ja")}>
+												<div className="flex items-center gap-3">
+													<RadioGroupItem value="ja" id="r3" />
+													<Label htmlFor="r1">Ja</Label>
+												</div>
+												<div className="flex items-center gap-3">
+													<RadioGroupItem value="nej" id="r4" />
+													<Label htmlFor="r2">Nej</Label>
+												</div>
+											</RadioGroup>
 										)}
 									/>
 								</Field>
