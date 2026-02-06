@@ -28,7 +28,13 @@ export async function POST(request: Request) {
 				valueInputOption: 'USER_ENTERED',
 				insertDataOption: 'INSERT_ROWS',
 				requestBody: {
-					values: [[entry.name, entry.attending, entry.rideBus, entry.foodPreferences, new Date().toISOString()]],
+					values: [[
+						entry.name, 
+						entry.attending ? 'Ja' : 'Nej', 
+						entry.rideBus ? 'Ja' : 'Nej', 
+						entry.foodPreferences, 
+						new Date().toISOString()
+					]],
 				},
 			})
 		}
@@ -88,11 +94,11 @@ export async function POST(request: Request) {
 												<strong>Namn:</strong> ${body[0].name}
 											</p>
 											<p style="color: #333333; font-size: 15px; margin: 8px 0; line-height: 1.6;">
-												<strong>Kommer:</strong> ${body[0].attending}
+												<strong>Kommer:</strong> ${body[0].attending ? 'Ja' : 'Nej'}
 											</p>
 											${body[0].attending ? `
 												<p style="color: #333333; font-size: 15px; margin: 8px 0; line-height: 1.6;">
-													<strong>Åker buss:</strong> ${body[0].rideBus}
+													<strong>Åker buss:</strong> ${body[0].rideBus ? 'Ja' : 'Nej'}
 												</p>
 											` : ''}
 											${body[0].attending ? `
@@ -115,11 +121,11 @@ export async function POST(request: Request) {
 												<strong>Namn:</strong> ${entry.name}
 											</p>
 											<p style="color: #333333; font-size: 15px; margin: 8px 0; line-height: 1.6;">
-												<strong>Kommer:</strong> ${entry.attending}
+												<strong>Kommer:</strong> ${entry.attending ? 'Ja' : 'Nej'}
 											</p>
 											${entry.attending ? `
 												<p style="color: #333333; font-size: 15px; margin: 8px 0; line-height: 1.6;">
-													<strong>Åker buss:</strong> ${entry.rideBus}
+													<strong>Åker buss:</strong> ${entry.rideBus ? 'Ja' : 'Nej'}
 												</p>
 											` : ''}
 											${entry.attending ? `
