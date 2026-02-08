@@ -17,6 +17,8 @@ import {
   useForm,
   useFieldArray,
 } from "react-hook-form";
+import { AlertCircle, ArrowLeft } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export default function osa() {
   type Guest = {
@@ -57,10 +59,12 @@ export default function osa() {
   });
 
   const [done, setDone] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log("Form submitted:", data);
-
+    setError(null);
     // Map guests to API format (add email to each guest)
     const apiData = data.guests.map((guest) => ({
       name: guest.name,
@@ -70,16 +74,30 @@ export default function osa() {
       foodPreferences: guest.foodPreferences,
     }));
 
-    console.log("API data:", apiData);
-    setDone(true);
+    setLoading(true);
+    try {
+      const res = await fetch("/api/osa", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(apiData),
+      });
 
-    fetch("/api/osa", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(apiData),
-    });
+      if (!res.ok) {
+        throw new Error("Något gick fel vid skickandet. Försök igen!");
+      }
+
+      setDone(true);
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Något gick fel vid skickandet. Försök igen!",
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   const onError = (errors: any) => {
@@ -87,10 +105,16 @@ export default function osa() {
   };
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen max-w-2xl mx-auto text-[18px] md:text-base">
       <div className="m-5 relative">
         <header className="">
-          <img src="logga.png" alt="Viktoria & Isak" className="mx-auto w-68" />
+          <a href="/">
+            <img
+              src="logga.png"
+              alt="Viktoria & Isak"
+              className="mx-auto w-68"
+            />
+          </a>
         </header>
         <div hidden={!done} className="">
           <h1 className="text-center text-2xl pt-20">Tack för ditt svar!</h1>
@@ -99,17 +123,25 @@ export default function osa() {
           </h2>
         </div>
         <div hidden={done}>
-          <h1 className="text-center py-10 text-lg" hidden={done}>
-            OSA
-          </h1>
+          <div className="grid grid-cols-3 items-center">
+            <div className="flex justify-center">
+              <div className="w-full h-px bg-gray-300"></div>
+            </div>
+            <h1
+              className="text-center py-10 text-[40px] font-fancy"
+              hidden={done}
+            >
+              OSA
+            </h1>
+            <div className="flex justify-center">
+              <div className="w-full h-px bg-gray-300"></div>
+            </div>
+          </div>
           <form className="w-full" onSubmit={handleSubmit(onSubmit, onError)}>
             <FieldGroup className="" id="user">
               <Field>
                 <FieldLegend>Email *</FieldLegend>
-                <FieldDescription>
-                  Mailaddressen används <b>endast</b> för att skicka ett
-                  bekräftelsemail
-                </FieldDescription>
+
                 <Input
                   type="email"
                   id="email"
@@ -243,28 +275,75 @@ export default function osa() {
                 </div>
               ))}
 
-              <Button
-                type="button"
-                variant="secondary"
-                className="w-full mt-8"
-                onClick={() =>
-                  append({
-                    name: "",
-                    attending: undefined,
-                    rideBus: undefined,
-                    foodPreferences: "",
-                  })
-                }
-              >
-                Lägg till person
-              </Button>
+              <div className="grid grid-cols-2 gap-4 mt-5">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  className="w-full text-xl text-white"
+                  onClick={() =>
+                    append({
+                      name: "",
+                      attending: undefined,
+                      rideBus: undefined,
+                      foodPreferences: "",
+                    })
+                  }
+                >
+                  Lägg till person
+                </Button>
 
-              <Button className="w-40 mx-auto mt-4" type="submit">
-                Skicka
-              </Button>
+                <Button
+                  className="w-full mx-auto text-white text-xl relative overflow-hidden"
+                  type="submit"
+                >
+                  <span
+                    className={`transition-transform duration-300 ${loading ? "-translate-x-2px]" : "translate-x-1/3"}`}
+                  >
+                    Skicka
+                  </span>
+                  <svg
+                    className={`size-5 animate-spin transition-transform duration-300 inset-0 ${loading ? "translate-y-0" : "-translate-y-[200%]"}`}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                </Button>
+              </div>
             </FieldGroup>
           </form>
         </div>
+      </div>
+      {error && (
+        <Alert
+          variant="destructive"
+          className="mt-6 bg-red-50/50 dark:bg-red-950/10 animate-in fade-in slide-in-from-top-2 duration-300"
+        >
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Ett fel uppstod</AlertTitle>
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+      <div className="w-full flex justify-center my-5">
+        <Button className="w-2/3 mx-auto text-xl" variant="outline" asChild>
+          <a href="/">
+            <ArrowLeft />
+            Tillbaka till startsidan
+          </a>
+        </Button>
       </div>
     </main>
   );

@@ -14,7 +14,6 @@ import {
   Calendar,
   MapPin,
   Users,
-  Camera,
   Gift,
   Menu,
   X,
@@ -26,6 +25,7 @@ import {
   Baby,
 } from "lucide-react";
 import Link from "next/link";
+import Countdown from "@/components/ui/countdown";
 
 const sections = [
   { id: "our-story", title: "Vår historia", icon: Heart },
@@ -34,7 +34,7 @@ const sections = [
   { id: "transport", title: "Transport", icon: Bus },
   { id: "speech", title: "Hålla tal", icon: MessageCircleHeart },
   { id: "kids", title: "Barn på bröllopet", icon: Baby },
-  { id: "gang", title: "Bröllopets Goa Gäng", icon: Users },
+  { id: "gift", title: "Bröllopspresent", icon: Gift },
 ];
 
 export default function WeddingWebsite() {
@@ -121,8 +121,8 @@ export default function WeddingWebsite() {
         className={`bg-radial-[at_0%_50%] from-black from-40% to-transparent to-160% fixed top-0 left-0 w-full h-full transition-opacity duration-400 pointer-events-none z-30 ${isMobileMenuOpen ? "opacity-70" : "opacity-0"}`}
       />
 
-      <main className="w-full">
-        <header className="relative text-center m-4 mt-40 bg-[url(/i&v/header.jpg)] bg-local rounded-md shadow-lg aspect-2/3 bg-cover bg-center ">
+      <main className="text-[18px] md:text-base max-w-4xl mx-auto">
+        <header className="relative text-center m-4 mt-40 bg-[url(/i&v/header.jpg)] bg-local rounded-md shadow-lg aspect-2/3 md:aspect-5/4 bg-cover bg-center ">
           <img
             src="logga.png"
             alt="Viktoria & Isak"
@@ -140,18 +140,19 @@ export default function WeddingWebsite() {
         </header>
 
         <div className="max-w-4xl mx-auto pb-8 sm:pb-16 space-y-0">
+          <Countdown className="pt-10 w-[90%] mx-auto" />
           {/* Our Story */}
           <section id="our-story" className="scroll-mt-8 py-8  ">
             <Card className="bg-white border-0 shadow-none">
               <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-xl sm:text-2xl">
+                <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl">
                   <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
                   Vår Historia
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4 grid grid-cols-4 text-sm">
+              <CardContent className="space-y-4 grid grid-cols-4">
                 <div className="col-span-3">
-                  <p className=" sm:text-base">
+                  <p>
                     Våren 2014 blev Viktorias idrottslärare sjukskriven och en
                     vikare fick hoppa in. Vikarien gav eleverna en uppgift: att
                     testa något nytt. Eftersom vikaren var fäkttränare så
@@ -160,13 +161,13 @@ export default function WeddingWebsite() {
                     första träningen gick Viktoria och vännerna iväg mot bussen.
                     De hinner inte långt innan Viktoria säger:
                   </p>
-                  <p className=" sm:text-base py-3">
+                  <p>
                     <i>
                       "Han den där med brunt hår och bruna ögon, han var söt".
                     </i>
                   </p>
 
-                  <p className=" sm:text-base">
+                  <p>
                     Så vi vill säga tack till vikarien som oväntat kom in och
                     samanfogade våra vägar. I 12 år har vi varit på denna resan
                     och i augusti ska vi föreviga vår kärlek tillsammans med er!
@@ -183,13 +184,13 @@ export default function WeddingWebsite() {
             </Card>
           </section>
 
-          <div className="w-[90%] mx-auto h-38 overflow-hidden rounded-lg bg-[url(/i&v/holding_hands.jpg)] bg-local  aspect-2/3 bg-cover bg-center shadow-xl"></div>
+          <div className="w-[90%] mx-auto overflow-hidden rounded-lg bg-[url(/i&v/holding_hands.jpg)] bg-local lg:my-10 aspect-3/1 bg-cover bg-center shadow-xl"></div>
 
           {/* ceremony */}
           <section id="ceremony" className="scroll-mt-8 py-8  ">
             <Card className="bg-white border-0 shadow-none">
               <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-xl sm:text-2xl">
+                <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl">
                   <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
                   Vigsel
                 </CardTitle>
@@ -208,7 +209,7 @@ export default function WeddingWebsite() {
                     <li className="">Adress: Sandby kyrka Färjestaden</li>
                     <li>
                       Du kan antingen köra dit, eller åka med{" "}
-                      <a href="#buss" className=" text-blue-600 text">
+                      <a href="#transport" className=" text-blue-600">
                         <u>vår buss</u>
                       </a>
                       .
@@ -227,7 +228,7 @@ export default function WeddingWebsite() {
             <div className="bg-[url(/i&v/dancing.jpg)] bg-local aspect-2/3 bg-cover bg-center flex-col-reverse flex mask-b-from-15% mask-b-to-transparent" />
             <Card className="border-0 mt-[-40] py-0 pb-8 bg-transparent text-white rounded-none">
               <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-xl sm:text-3xl">
+                <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl">
                   <PartyPopper className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   Bröllopsfest
                 </CardTitle>
@@ -251,13 +252,13 @@ export default function WeddingWebsite() {
           <section id="transport" className="scroll-mt-8 py-8  ">
             <Card className="bg-white border-0 shadow-none">
               <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-xl sm:text-2xl">
+                <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl">
                   <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
                   Buss
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className=" sm:text-base">
+                <p>
                   Vi har bokat buss som åker från Kalmar till Sandby kyrka och
                   sedan till bröllopsfesten i Skällby Loge. Bussen avgår från
                   Kalmar centralstation kl 13:00. Anmäl ditt intresse att åka
@@ -271,21 +272,17 @@ export default function WeddingWebsite() {
             <div className="w-3/4 h-px bg-gray-300"></div>
           </div>
 
-          <div className="flex justify-center">
-            <div className="w-3/4 h-px bg-gray-300"></div>
-          </div>
-
           {/* Speech */}
           <section id="speech" className="scroll-mt-8 py-8  ">
             <Card className="bg-white border-0 shadow-none">
               <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-xl sm:text-2xl">
+                <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl">
                   <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
                   Hålla tal
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className=" sm:text-base">
+                <p>
                   Vi älskar tal! Vill du hålla ett tal under middagen? Fyll i
                   detta formulär!
                 </p>
@@ -308,13 +305,13 @@ export default function WeddingWebsite() {
           <section id="kids" className="scroll-mt-8 py-8  ">
             <Card className="bg-white border-0 shadow-none">
               <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-xl sm:text-2xl">
+                <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl">
                   <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
                   Barn
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className=" sm:text-base">
+                <p>
                   Vi har valt att hålla vår bröllopsfest barnfri. Barn är
                   hjärtligt välkomna till vigseln i kyrkan, men får tyvärr
                   stanna hemma under festen. Undantag görs såklart för de allra
@@ -328,89 +325,32 @@ export default function WeddingWebsite() {
             <div className="w-3/4 h-px bg-gray-300"></div>
           </div>
 
-          {/* Gang */}
-          <section id="gang" className="scroll-mt-8 py-8  ">
-            <Card className="bg-white border-0 shadow-none">
+          {/* Gift */}
+          <section id="gift" className="relative scroll-mt-8 py-8  ">
+            <Card className="bg-white border-0 shadow-none mb-10">
               <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-xl sm:text-2xl">
-                  <Users className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
-                  Det goa gänget
+                <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl">
+                  <Gift className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
+                  Bröllopspresent
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="grid gap-8 sm:grid-cols-2">
-                  <div>
-                    <h3 className="font-semibold text-base sm:text-lg mb-4 text-black">
-                      Brudtärnor
-                    </h3>
-                    <div className="space-y-3">
-                      <div>
-                        <p className="font-medium text-black text-sm sm:text-base">
-                          Mira Wadin
-                        </p>
-                        <p className="text-xs sm:text-sm text-gray-600"></p>
-                      </div>
-                      <div>
-                        <p className="font-medium text-black text-sm sm:text-base">
-                          Amanda Almgren
-                        </p>
-                        <p className="text-xs sm:text-sm text-gray-600"></p>
-                      </div>
-                      <div>
-                        <p className="font-medium text-black text-sm sm:text-base">
-                          Embla Berntsson Tordahl
-                        </p>
-                        <p className="text-xs sm:text-sm text-gray-600"></p>
-                      </div>
-                      <div>
-                        <p className="font-medium text-black text-sm sm:text-base">
-                          Johanna Turfors
-                        </p>
-                        <p className="text-xs sm:text-sm text-gray-600"></p>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-base sm:text-lg mb-4 text-black">
-                      Marskalker
-                    </h3>
-                    <div className="space-y-3">
-                      <div>
-                        <p className="font-medium text-black text-sm sm:text-base">
-                          Garbriel Holmdahl
-                        </p>
-                        <p className="text-xs sm:text-sm text-gray-600"></p>
-                      </div>
-                      <div>
-                        <p className="font-medium text-black text-sm sm:text-base">
-                          Benjamin Holmdahl
-                        </p>
-                        <p className="text-xs sm:text-sm text-gray-600"></p>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-base sm:text-lg mb-4 text-black">
-                      Toastmasters
-                    </h3>
-                    <div className="space-y-3">
-                      <div>
-                        <p className="font-medium text-black text-sm sm:text-base">
-                          Otto Nilsson
-                        </p>
-                        <p className="text-xs sm:text-sm text-gray-600"></p>
-                      </div>
-                      <div>
-                        <p className="font-medium text-black text-sm sm:text-base">
-                          Johanna Turfors
-                        </p>
-                        <p className="text-xs sm:text-sm text-gray-600"></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <CardContent className="w-full">
+                <p className="max-w-4/5">
+                  Om ni vill och kan får ni gärna ge en present i form av ett
+                  bridrag till resekassan för vår bröllopsresa!
+                </p>
               </CardContent>
             </Card>
+            <img
+              src="/flowerRope1Rotated.png"
+              alt="Band av blommor"
+              className="w-[800px] aspect-4/1 hidden md:flex mx-auto -mb-10"
+            />
+            <img
+              src="/flowerBend.png"
+              alt="Flower Bend"
+              className="w-55 absolute md:hidden bottom-0 right-5"
+            />
           </section>
         </div>
       </main>
