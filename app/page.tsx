@@ -319,7 +319,7 @@ export default function WeddingWebsite() {
             </Card>
           </section>
 
-          <div className="flex justify-center">
+          <div className="flex justify-center  ">
             <div className="w-3/4 h-px bg-gray-300"></div>
           </div>
 
