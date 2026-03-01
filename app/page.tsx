@@ -11,13 +11,10 @@ import {
 import { Button } from "@/components/ui/button";
 import {
   Heart,
-  Calendar,
   MapPin,
-  Users,
   Gift,
   Menu,
   X,
-  Underline,
   Church,
   PartyPopper,
   Bus,
@@ -31,7 +28,7 @@ const sections = [
   { id: "our-story", title: "Vår historia", icon: Heart },
   { id: "ceremony", title: "Vigsel", icon: Church },
   { id: "party", title: "Festen", icon: PartyPopper },
-  { id: "transport", title: "Transport", icon: Bus },
+  { id: "transport", title: "Buss", icon: Bus },
   { id: "speech", title: "Hålla tal", icon: MessageCircleHeart },
   { id: "kids", title: "Barn på bröllopet", icon: Baby },
   { id: "gift", title: "Bröllopspresent", icon: Gift },
@@ -140,7 +137,7 @@ export default function WeddingWebsite() {
         </header>
 
         <div className="max-w-4xl mx-auto pb-8 sm:pb-16 space-y-0">
-          <Countdown className="pt-10 w-[90%] mx-auto" />
+          <Countdown className="mt-10 py-5 md:px-2 w-[90%] mx-auto border-2 border-primary rounded-2xl text-black shadow-md" />
           {/* Our Story */}
           <section id="our-story" className="scroll-mt-8 py-8  ">
             <Card className="bg-white border-0 shadow-none">
@@ -154,12 +151,12 @@ export default function WeddingWebsite() {
                 <div className="col-span-3">
                   <p>
                     Våren 2014 blev Viktorias idrottslärare sjukskriven och en
-                    vikare fick hoppa in. Vikarien gav eleverna en uppgift: att
-                    testa något nytt. Eftersom vikaren var fäkttränare så
-                    lockade det Viktoria och hennes vänner att testa just
-                    fäktning. Väl på klubben fick Viktoria syn på Isak. Efter
-                    första träningen gick Viktoria och vännerna iväg mot bussen.
-                    De hinner inte långt innan Viktoria säger:
+                    vikare fick hoppa in. Eleverna fick en uppgift: att testa
+                    något nytt. Eftersom vikaren var fäkttränare så lockade det
+                    Viktoria och hennes vänner att testa just fäktning. Väl på
+                    klubben fick Viktoria syn på Isak. Efter första träningen
+                    gick Viktoria och vännerna iväg mot bussen. De hinner inte
+                    långt innan Viktoria säger:
                   </p>
                   <p>
                     <i>
@@ -169,7 +166,7 @@ export default function WeddingWebsite() {
 
                   <p>
                     Så vi vill säga tack till vikarien som oväntat kom in och
-                    samanfogade våra vägar. I 12 år har vi varit på denna resan
+                    sammanfogade våra vägar. I 12 år har vi varit på denna resa
                     och i augusti ska vi föreviga vår kärlek tillsammans med er!
                   </p>
                 </div>
@@ -187,11 +184,11 @@ export default function WeddingWebsite() {
           <div className="w-[90%] mx-auto overflow-hidden rounded-lg bg-[url(/i&v/holding_hands.jpg)] bg-local lg:my-10 aspect-3/1 bg-cover bg-center shadow-xl"></div>
 
           {/* ceremony */}
-          <section id="ceremony" className="scroll-mt-8 py-8  ">
+          <section id="ceremony" className="scroll-mt-8 pb-8 pt-12 ">
             <Card className="bg-white border-0 shadow-none">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl">
-                  <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
+                  <Church className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
                   Vigsel
                 </CardTitle>
               </CardHeader>
@@ -223,10 +220,10 @@ export default function WeddingWebsite() {
           {/* Party */}
           <section
             id="party"
-            className="w-full mx-auto scroll-mt-8 shadow-xl bg-black"
+            className="w-full mx-auto scroll-mt-8 shadow-xl bg-black rounded-none lg:rounded-lg"
           >
-            <div className="bg-[url(/i&v/dancing.jpg)] bg-local aspect-2/3 bg-cover bg-center flex-col-reverse flex mask-b-from-15% mask-b-to-transparent" />
-            <Card className="border-0 mt-[-40] py-0 pb-8 bg-transparent text-white rounded-none">
+            <div className="bg-[url(/i&v/dancing.jpg)] bg-local aspect-2/3 bg-cover bg-center flex-col-reverse flex mask-b-from-15% mask-b-to-transparent rounded-none lg:rounded-lg" />
+            <Card className="border-0 mt-[-60] py-0 pb-8 bg-transparent text-white rounded-none md:rounded-lg shadow-none md:shadow-lg">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl">
                   <PartyPopper className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
@@ -249,11 +246,11 @@ export default function WeddingWebsite() {
           </div>
 
           {/* Transport */}
-          <section id="transport" className="scroll-mt-8 py-8  ">
+          <section id="transport" className="scroll-mt-8 pt-8 pb-2">
             <Card className="bg-white border-0 shadow-none">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl">
-                  <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
+                  <Bus className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
                   Buss
                 </CardTitle>
               </CardHeader>
@@ -273,11 +270,11 @@ export default function WeddingWebsite() {
           </div>
 
           {/* Speech */}
-          <section id="speech" className="scroll-mt-8 py-8  ">
+          <section id="speech" className="scroll-mt-8 pb-8 pt-2">
             <Card className="bg-white border-0 shadow-none">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl">
-                  <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
+                  <MessageCircleHeart className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
                   Hålla tal
                 </CardTitle>
               </CardHeader>
@@ -289,7 +286,7 @@ export default function WeddingWebsite() {
                 <div className="mt-4">
                   <Link href="/speech">
                     <Button className="text-white" variant="default">
-                      Anmäl att du vill hålla tal
+                      Anmäl att du vill hålla tal här!
                     </Button>
                   </Link>
                 </div>
@@ -297,16 +294,17 @@ export default function WeddingWebsite() {
             </Card>
           </section>
 
-          <div className="flex justify-center">
-            <div className="w-3/4 h-px bg-gray-300"></div>
-          </div>
+          <img
+            className="w-[90%] mx-auto rounded-lg shadow-lg h-auto"
+            src="/i&v/lake.jpg"
+          ></img>
 
           {/* Kids */}
           <section id="kids" className="scroll-mt-8 py-8  ">
             <Card className="bg-white border-0 shadow-none">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl">
-                  <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
+                  <Baby className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
                   Barn
                 </CardTitle>
               </CardHeader>
@@ -314,8 +312,8 @@ export default function WeddingWebsite() {
                 <p>
                   Vi har valt att hålla vår bröllopsfest barnfri. Barn är
                   hjärtligt välkomna till vigseln i kyrkan, men får tyvärr
-                  stanna hemma under festen. Undantag görs såklart för de allra
-                  minsta.
+                  stanna hemma under festen. Undantag kan såklart göras för dem
+                  allra minsta.
                 </p>
               </CardContent>
             </Card>
@@ -337,7 +335,11 @@ export default function WeddingWebsite() {
               <CardContent className="w-full">
                 <p className="max-w-4/5">
                   Om ni vill och kan får ni gärna ge en present i form av ett
-                  bridrag till resekassan för vår bröllopsresa!
+                  bidrag till vår bröllopsresa!
+                </p>
+                <p className="max-w-4/5 mt-2">
+                  Det gör ni enklast genom att swisha till Isaks mamma, Malin.
+                  Telefon nr: 070-964 52 46
                 </p>
               </CardContent>
             </Card>

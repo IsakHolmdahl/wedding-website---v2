@@ -8,13 +8,14 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Link from "next/link";
 
 export default function SpeechPage() {
   type Inputs = {
+    name: string;
     email: string;
     relationToCouple: string;
     equipmentNeeds: string;
@@ -38,11 +39,12 @@ export default function SpeechPage() {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log("Form submitted:", data);
-    setLoading(true);
     setError(null);
+    // Map guests to API format (add email to each guest)
 
+    setLoading(true);
     try {
-      const response = await fetch("/api/speech", {
+      const res = await fetch("/api/speech", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -50,7 +52,7 @@ export default function SpeechPage() {
         body: JSON.stringify(data),
       });
 
-      if (!response.ok) {
+      if (!res.ok) {
         throw new Error("Något gick fel vid skickandet. Försök igen!");
       }
 
@@ -111,6 +113,16 @@ export default function SpeechPage() {
           </p>
           <form className="w-full" onSubmit={handleSubmit(onSubmit, onError)}>
             <FieldGroup className="" id="speech-form">
+              <Field className="gap-0">
+                <FieldLegend>Namn *</FieldLegend>
+                <Input
+                  type="text"
+                  id="name"
+                  {...register("name", { required: true })}
+                  required
+                />
+              </Field>
+
               <Field className="gap-0">
                 <FieldLegend>Email *</FieldLegend>
                 <FieldDescription className="mb-2">
@@ -189,18 +201,28 @@ export default function SpeechPage() {
               </div>
             </FieldGroup>
           </form>
-          {error && (
-            <Alert
-              variant="destructive"
-              className="mt-6 bg-red-50/50 dark:bg-red-950/10 animate-in fade-in slide-in-from-top-2 duration-300"
-            >
-              <AlertCircle className="h-4 w-4" />
-              <AlertTitle>Ett fel uppstod</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
         </div>
       </div>
+      {error && (
+        <Alert
+          variant="destructive"
+          className="mt-6 bg-red-50/50 dark:bg-red-950/10 animate-in fade-in slide-in-from-top-2 duration-300"
+        >
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Ett fel uppstod</AlertTitle>
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+      {done && (
+        <div className="w-full flex justify-center my-5">
+          <Button className="w-2/3 mx-auto text-xl" variant="outline" asChild>
+            <a href="/">
+              <ArrowLeft />
+              Tillbaka till startsidan
+            </a>
+          </Button>
+        </div>
+      )}
     </main>
   );
 }

@@ -1,73 +1,84 @@
-import { NextResponse } from 'next/server'
-import nodemailer from 'nodemailer'
-import { google } from 'googleapis'
-import * as path from 'path'
+import { NextResponse } from "next/server";
+import nodemailer from "nodemailer";
+import { google } from "googleapis";
+import * as path from "path";
 
 type SpeechInput = {
-	email: string
-	relationToCouple: string
-	equipmentNeeds: string
-}
+  name: string;
+  email: string;
+  relationToCouple: string;
+  equipmentNeeds: string;
+};
 
 export async function POST(request: Request) {
-	const body = await request.json() as SpeechInput
+  const body = (await request.json()) as SpeechInput;
 
-	const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/gm, '\n')
+  const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/gm, "\n");
 
-	const auth = new google.auth.GoogleAuth({
-		credentials: {
-			client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-			private_key: privateKey,
-		},
-		scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-	})
+  const auth = new google.auth.GoogleAuth({
+    credentials: {
+      client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+      private_key: privateKey,
+    },
+    scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+  });
 
-	const sheets = google.sheets({ version: 'v4', auth })
-	try {
-		await sheets.spreadsheets.values.append({
-			spreadsheetId: process.env.GOOGLE_SHEET_ID,
-			range: 'tal!A:D', // Writing to 'tal' sheet
-			valueInputOption: 'USER_ENTERED',
-			insertDataOption: 'INSERT_ROWS',
-			requestBody: {
-				values: [[
-					body.email, 
-					body.relationToCouple, 
-					body.equipmentNeeds || 'Inga behov', 
-					new Date().toISOString()
-				]],
-			},
-		})
-	} catch (error) {
-		console.error('Google Sheets error:', error)
-		return NextResponse.json({ error: 'Failed to save to spreadsheet' }, { status: 500 });
-	}
+  const sheets = google.sheets({ version: "v4", auth });
+  try {
+    await sheets.spreadsheets.values.append({
+      spreadsheetId: process.env.GOOGLE_SHEET_ID_SPEECH,
+      range: "Blad1!A:D",
+      valueInputOption: "USER_ENTERED",
+      insertDataOption: "INSERT_ROWS",
+      requestBody: {
+        values: [
+          [
+            body.name,
+            body.email,
+            body.relationToCouple,
+            body.equipmentNeeds,
+            new Date().toISOString(),
+          ],
+        ],
+      },
+    });
+  } catch (error) {
+    console.error("Google Sheets error:", error);
+    return NextResponse.json(
+      { error: "Failed to save to spreadsheet" },
+      { status: 500 },
+    );
+  }
 
-	try {
-		if (!body) {
-			return NextResponse.json({ error: 'No data provided' }, { status: 400 });
-		}
+  try {
+    if (!body) {
+      return NextResponse.json({ error: "No data provided" }, { status: 400 });
+    }
 
-		// Verify credentials aren't undefined or have extra whitespace
-		if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) {
-			throw new Error('SMTP credentials missing');
-		}
-		
-		const transporter = nodemailer.createTransport({
-			host: process.env.SMTP_HOST.trim(),
-			port: 587,
-			secure: false,
-			auth: {
-				user: process.env.SMTP_USER.trim(),
-				pass: process.env.SMTP_PASS.trim(),
-			},
-			tls: {
-				ciphers: 'SSLv3',
-				rejectUnauthorized: false
-			}
-		});
-		
-		const emailBody = `
+    // Verify credentials aren't undefined or have extra whitespace
+    if (
+      !process.env.SMTP_HOST ||
+      !process.env.SMTP_USER ||
+      !process.env.SMTP_PASS
+    ) {
+      throw new Error("SMTP credentials missing");
+    }
+
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST.trim(),
+      port: 587,
+      secure: false,
+      auth: {
+        user: process.env.SMTP_USER.trim(),
+        pass: process.env.SMTP_PASS.trim(),
+      },
+      tls: {
+        ciphers: "SSLv3",
+        rejectUnauthorized: false,
+      },
+    });
+
+    const emailBody = `
 			<!DOCTYPE html>
 			<html>
 			<head>
@@ -94,11 +105,15 @@ export async function POST(request: Request) {
 											<p style="color: #333333; font-size: 15px; margin: 8px 0; line-height: 1.6;">
 												<strong>Din relation till brudparet:</strong> ${body.relationToCouple}
 											</p>
-											${body.equipmentNeeds ? `
+											${
+                        body.equipmentNeeds
+                          ? `
 												<p style="color: #333333; font-size: 15px; margin: 8px 0; line-height: 1.6;">
 													<strong>Utrustningsbehov:</strong> ${body.equipmentNeeds}
 												</p>
-											` : ''}
+											`
+                          : ""
+                      }
 										</div>
 									</td>
 								</tr>
@@ -115,25 +130,26 @@ export async function POST(request: Request) {
 				</table>
 			</body>
 			</html>
-		`
-		const logoPath = path.join(process.cwd(), 'public', 'logga.png');
-		
-		await transporter.sendMail({
-			from: process.env.SMTP_USER,
-			to: body.email,
-			subject: `Talanmälan Bekräftelse`,
-			html: emailBody,
-			attachments: [{
-				filename: 'logga.png',
-				path: logoPath,
-				cid: 'logo'
-			}]
-		});
+		`;
+    const logoPath = path.join(process.cwd(), "public", "logga.png");
 
-	} catch (error) {
-		console.error('Email sending error:', error)
-		// Don't fail the request if email fails
-	}
+    await transporter.sendMail({
+      from: process.env.SMTP_USER,
+      to: body.email,
+      subject: `Talanmälan Bekräftelse`,
+      html: emailBody,
+      attachments: [
+        {
+          filename: "logga.png",
+          path: logoPath,
+          cid: "logo",
+        },
+      ],
+    });
+  } catch (error) {
+    console.error("Email sending error:", error);
+    // Don't fail the request if email fails
+  }
 
-	return NextResponse.json({ success: true });
+  return NextResponse.json({ success: true });
 }

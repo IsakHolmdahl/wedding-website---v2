@@ -33,11 +33,11 @@ const Countdown = ({ className }: CountdownProps) => {
             <h2 className="col-span-2">Sekunder</h2>
           </div>
         </div>
-        <div className="text-center md:hidden grid grid-cols-2 gap-2 text-2xl text-black gap-y-10">
-          <h2>{days} dagar</h2>
-          <h2>{hours} timmar</h2>
-          <h2>{minutes} minuter</h2>
-          <h2>{seconds} sekunder</h2>
+        <div className="text-center md:hidden grid grid-cols-2 gap-2 text-2xl gap-y-6">
+          <h2>{days} Dagar</h2>
+          <h2>{hours} Timmar</h2>
+          <h2>{minutes} Minuter</h2>
+          <h2>{seconds} Sekunder</h2>
         </div>
       </div>
     );

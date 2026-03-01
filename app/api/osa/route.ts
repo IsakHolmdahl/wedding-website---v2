@@ -1,72 +1,81 @@
-import { NextResponse } from 'next/server'
-import nodemailer from 'nodemailer'
-import { google } from 'googleapis'
-import { OsaAnswers } from '@/types/osaAnswers'
-import * as fs from 'fs'
-import * as path from 'path'
+import { NextResponse } from "next/server";
+import nodemailer from "nodemailer";
+import { google } from "googleapis";
+import { OsaAnswers } from "@/types/osaAnswers";
+import * as fs from "fs";
+import * as path from "path";
 
 export async function POST(request: Request) {
-	const body = await request.json() as OsaAnswers[]
+  const body = (await request.json()) as OsaAnswers[];
 
-	const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/gm, '\n')
+  const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/gm, "\n");
 
-	const auth = new google.auth.GoogleAuth({
-		credentials: {
-			client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-			private_key: privateKey,
-		},
-		scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-	})
+  const auth = new google.auth.GoogleAuth({
+    credentials: {
+      client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+      private_key: privateKey,
+    },
+    scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+  });
 
-	const sheets = google.sheets({ version: 'v4', auth })
-	try {
-		for (const entry of body) {
+  const sheets = google.sheets({ version: "v4", auth });
+  try {
+    for (const entry of body) {
+      await sheets.spreadsheets.values.append({
+        spreadsheetId: process.env.GOOGLE_SHEET_ID,
+        range: "Blad1!A:E", // Adjust to your columns
+        valueInputOption: "USER_ENTERED",
+        insertDataOption: "INSERT_ROWS",
+        requestBody: {
+          values: [
+            [
+              entry.name,
+              entry.attending ? "Ja" : "Nej",
+              entry.email,
+              entry.rideBus ? "Ja" : "Nej",
+              entry.foodPreferences,
+              new Date().toISOString(),
+            ],
+          ],
+        },
+      });
+    }
+  } catch (error) {
+    console.error("Google Sheets error:", error);
+    return NextResponse.json(
+      { error: "Failed to save to spreadsheet" },
+      { status: 500 },
+    );
+  }
 
-			await sheets.spreadsheets.values.append({
-				spreadsheetId: process.env.GOOGLE_SHEET_ID,
-				range: 'Blad1!A:E', // Adjust to your columns
-				valueInputOption: 'USER_ENTERED',
-				insertDataOption: 'INSERT_ROWS',
-				requestBody: {
-					values: [[
-						entry.name, 
-						entry.attending ? 'Ja' : 'Nej', 
-						entry.rideBus ? 'Ja' : 'Nej', 
-						entry.foodPreferences, 
-						new Date().toISOString()
-					]],
-				},
-			})
-		}
-	} catch (error) {
-		console.error('Google Sheets error:', error)
-		return NextResponse.json({ error: 'Failed to save to spreadsheet' }, { status: 500 });
-	}
+  try {
+    if (!body || body.length === 0) {
+      return NextResponse.json({ error: "No data provided" }, { status: 400 });
+    }
 
-	try {
-		if (!body || body.length === 0) {
-			return NextResponse.json({ error: 'No data provided' }, { status: 400 });
-		}
+    // Verify credentials aren't undefined or have extra whitespace
+    if (
+      !process.env.SMTP_HOST ||
+      !process.env.SMTP_USER ||
+      !process.env.SMTP_PASS
+    ) {
+      throw new Error("SMTP credentials missing");
+    }
 
-		// Verify credentials aren't undefined or have extra whitespace
-		if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) {
-			throw new Error('SMTP credentials missing');
-		}
-		
-		const transporter = nodemailer.createTransport({
-			host: process.env.SMTP_HOST.trim(),
-			port: 587,
-			secure: false,
-			auth: {
-				user: process.env.SMTP_USER.trim(),
-				pass: process.env.SMTP_PASS.trim(),
-			},
-			tls: {
-				ciphers: 'SSLv3',
-				rejectUnauthorized: false
-			}
-		});
-		let emailBody = `
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST.trim(),
+      port: 587,
+      secure: false,
+      auth: {
+        user: process.env.SMTP_USER.trim(),
+        pass: process.env.SMTP_PASS.trim(),
+      },
+      tls: {
+        ciphers: "SSLv3",
+        rejectUnauthorized: false,
+      },
+    });
+    let emailBody = `
 			<!DOCTYPE html>
 			<html>
 			<head>
@@ -94,50 +103,66 @@ export async function POST(request: Request) {
 												<strong>Namn:</strong> ${body[0].name}
 											</p>
 											<p style="color: #333333; font-size: 15px; margin: 8px 0; line-height: 1.6;">
-												<strong>Kommer:</strong> ${body[0].attending ? 'Ja' : 'Nej'}
+												<strong>Kommer:</strong> ${body[0].attending ? "Ja" : "Nej"}
 											</p>
-											${body[0].attending ? `
+											${
+                        body[0].attending
+                          ? `
 												<p style="color: #333333; font-size: 15px; margin: 8px 0; line-height: 1.6;">
-													<strong>Åker buss:</strong> ${body[0].rideBus ? 'Ja' : 'Nej'}
+													<strong>Åker buss:</strong> ${body[0].rideBus ? "Ja" : "Nej"}
 												</p>
-											` : ''}
-											${body[0].attending ? `
+											`
+                          : ""
+                      }
+											${
+                        body[0].attending
+                          ? `
 												<p style="color: #333333; font-size: 15px; margin: 8px 0; line-height: 1.6;">
 													<strong>Allergi/Matpreferens:</strong> ${body[0].foodPreferences}
 												</p>
-											` : ''}
+											`
+                          : ""
+                      }
 										</div>
-		`
-		if (body.length > 1) {
-			emailBody += `
+		`;
+    if (body.length > 1) {
+      emailBody += `
 										<h2 style="color: #333333; font-size: 22px; margin: 30px 0 20px 0; border-bottom: 2px solid #8b5cf6; padding-bottom: 10px;">
 											Du OSA:de även för:
 										</h2>
-			`
-			for (const entry of body.slice(1)) {
-				emailBody += `
+			`;
+      for (const entry of body.slice(1)) {
+        emailBody += `
 										<div style="background-color: #f9f9f9; border-left: 4px solid #8b5cf6; padding: 20px; margin-bottom: 15px; border-radius: 4px;">
 											<p style="color: #333333; font-size: 15px; margin: 8px 0; line-height: 1.6;">
 												<strong>Namn:</strong> ${entry.name}
 											</p>
 											<p style="color: #333333; font-size: 15px; margin: 8px 0; line-height: 1.6;">
-												<strong>Kommer:</strong> ${entry.attending ? 'Ja' : 'Nej'}
+												<strong>Kommer:</strong> ${entry.attending ? "Ja" : "Nej"}
 											</p>
-											${entry.attending ? `
+											${
+                        entry.attending
+                          ? `
 												<p style="color: #333333; font-size: 15px; margin: 8px 0; line-height: 1.6;">
-													<strong>Åker buss:</strong> ${entry.rideBus ? 'Ja' : 'Nej'}
+													<strong>Åker buss:</strong> ${entry.rideBus ? "Ja" : "Nej"}
 												</p>
-											` : ''}
-											${entry.attending ? `
+											`
+                          : ""
+                      }
+											${
+                        entry.attending
+                          ? `
 												<p style="color: #333333; font-size: 15px; margin: 8px 0; line-height: 1.6;">
 													<strong>Allergi/Matpreferens:</strong> ${entry.foodPreferences}
 												</p>
-											` : ''}
+											`
+                          : ""
+                      }
 										</div>
-				`
-			}
-		}
-		emailBody += `
+				`;
+      }
+    }
+    emailBody += `
 									</td>
 								</tr>
 								<tr>
@@ -153,25 +178,26 @@ export async function POST(request: Request) {
 				</table>
 			</body>
 			</html>
-		`
-		const logoPath = path.join(process.cwd(), 'public', 'logga.png');
-		
-		await transporter.sendMail({
-			from: process.env.SMTP_USER,
-			to: body[0].email,
-			subject: `OSA Bekräftelse`,
-			html: emailBody,
-			attachments: [{
-				filename: 'logga.png',
-				path: logoPath,
-				cid: 'logo'
-			}]
-		});
+		`;
+    const logoPath = path.join(process.cwd(), "public", "logga.png");
 
-	} catch (error) {
-		console.error('Email sending error:', error)
-		// Don't fail the request if email fails
-	}
+    await transporter.sendMail({
+      from: process.env.SMTP_USER,
+      to: body[0].email,
+      subject: `OSA Bekräftelse`,
+      html: emailBody,
+      attachments: [
+        {
+          filename: "logga.png",
+          path: logoPath,
+          cid: "logo",
+        },
+      ],
+    });
+  } catch (error) {
+    console.error("Email sending error:", error);
+    // Don't fail the request if email fails
+  }
 
-	return NextResponse.json({ success: true });
+  return NextResponse.json({ success: true });
 }
