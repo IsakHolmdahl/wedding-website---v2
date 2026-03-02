@@ -125,10 +125,6 @@ export default function SpeechPage() {
 
               <Field className="gap-0">
                 <FieldLegend>Email *</FieldLegend>
-                <FieldDescription className="mb-2">
-                  Mailaddressen används <b>endast</b> för att skicka ett
-                  bekräftelsemail
-                </FieldDescription>
                 <Input
                   type="email"
                   id="email"
