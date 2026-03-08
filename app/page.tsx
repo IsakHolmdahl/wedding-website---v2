@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import {
   Heart,
-  MapPin,
+  Shirt,
   Gift,
   Menu,
   X,
@@ -20,6 +20,7 @@ import {
   Bus,
   MessageCircleHeart,
   Baby,
+  Wine,
 } from "lucide-react";
 import Link from "next/link";
 import Countdown from "@/components/ui/countdown";
@@ -29,7 +30,9 @@ const sections = [
   { id: "ceremony", title: "Vigsel", icon: Church },
   { id: "party", title: "Festen", icon: PartyPopper },
   { id: "transport", title: "Buss", icon: Bus },
+  { id: "dress", title: "Klädkod", icon: Shirt },
   { id: "speech", title: "Hålla tal", icon: MessageCircleHeart },
+  { id: "toastmasters", title: "Toastmasters", icon: Wine },
   { id: "kids", title: "Barn på bröllopet", icon: Baby },
   { id: "gift", title: "Bröllopspresent", icon: Gift },
 ];
@@ -137,13 +140,13 @@ export default function WeddingWebsite() {
         </header>
 
         <div className="max-w-4xl mx-auto pb-8 sm:pb-16 space-y-0">
-          <Countdown className="mt-10 py-5 md:px-2 w-[90%] mx-auto border-2 border-primary rounded-2xl text-black shadow-md" />
+          <Countdown className="mt-10 py-5 md:px-2 w-[90%] mx-auto border-2 border-primary rounded-2xl  shadow-md" />
           {/* Our Story */}
           <section id="our-story" className="scroll-mt-8 py-8  ">
             <Card className="bg-white border-0 shadow-none">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl">
-                  <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
+                  <Heart className="w-5 h-5 sm:w-6 sm:h-6 " />
                   Vår Historia
                 </CardTitle>
               </CardHeader>
@@ -184,11 +187,11 @@ export default function WeddingWebsite() {
           <div className="w-[90%] mx-auto overflow-hidden rounded-lg bg-[url(/i&v/holding_hands.jpg)] bg-local lg:my-10 aspect-3/1 bg-cover bg-center shadow-xl"></div>
 
           {/* ceremony */}
-          <section id="ceremony" className="scroll-mt-8 pb-8 pt-12 ">
+          <section id="ceremony" className="scroll-mt-60 py-8">
             <Card className="bg-white border-0 shadow-none">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl">
-                  <Church className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
+                  <Church className="w-5 h-5 sm:w-6 sm:h-6 " />
                   Vigsel
                 </CardTitle>
               </CardHeader>
@@ -206,7 +209,7 @@ export default function WeddingWebsite() {
                     <li className="">Adress: Sandby kyrka Färjestaden</li>
                     <li>
                       Du kan antingen köra dit, eller åka med{" "}
-                      <a href="#transport" className=" text-blue-600">
+                      <a href="#transport" className=" text-secondary">
                         <u>vår buss</u>
                       </a>
                       .
@@ -220,7 +223,7 @@ export default function WeddingWebsite() {
           {/* Party */}
           <section
             id="party"
-            className="w-full mx-auto scroll-mt-8 shadow-xl bg-black rounded-none lg:rounded-lg"
+            className="w-full mx-auto scroll-mt-8 shadow-lg bg-black rounded-none lg:rounded-lg"
           >
             <div className="bg-[url(/i&v/dancing.jpg)] bg-local aspect-2/3 bg-cover bg-center flex-col-reverse flex mask-b-from-15% mask-b-to-transparent rounded-none lg:rounded-lg" />
             <Card className="border-0 mt-[-60] py-0 pb-8 bg-transparent text-white rounded-none md:rounded-lg shadow-none md:shadow-lg">
@@ -246,11 +249,11 @@ export default function WeddingWebsite() {
           </div>
 
           {/* Transport */}
-          <section id="transport" className="scroll-mt-8 pt-8 pb-2">
+          <section id="transport" className="scroll-mt-70 py-8">
             <Card className="bg-white border-0 shadow-none">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl">
-                  <Bus className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
+                  <Bus className="w-5 h-5 sm:w-6 sm:h-6 " />
                   Buss
                 </CardTitle>
               </CardHeader>
@@ -265,16 +268,40 @@ export default function WeddingWebsite() {
             </Card>
           </section>
 
-          <div className="flex justify-center">
+          <div className="flex justify-center  ">
             <div className="w-3/4 h-px bg-gray-300"></div>
           </div>
 
-          {/* Speech */}
-          <section id="speech" className="scroll-mt-8 pb-8 pt-2">
+          {/* Dress code */}
+          <section id="dress" className="scroll-mt-60 py-8">
             <Card className="bg-white border-0 shadow-none">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl">
-                  <MessageCircleHeart className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
+                  <Shirt className="w-5 h-5 sm:w-6 sm:h-6 " />
+                  Klädkod
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p>
+                  Vi tänker klädkod kostym, d.v.s mörk eller ljus kostym samt
+                  klänning som går nedför knäna. Viktigaste är att du känner dig
+                  fin!{" "}
+                </p>
+              </CardContent>
+            </Card>
+          </section>
+
+          <img
+            className="w-[94%] mx-auto rounded-lg shadow-lg h-auto"
+            src="/i&v/dress_code.jpg"
+          ></img>
+
+          {/* Speech */}
+          <section id="speech" className="scroll-mt-60 py-8">
+            <Card className="bg-white border-0 shadow-none">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl">
+                  <MessageCircleHeart className="w-5 h-5 sm:w-6 sm:h-6 " />
                   Hålla tal
                 </CardTitle>
               </CardHeader>
@@ -294,17 +321,46 @@ export default function WeddingWebsite() {
             </Card>
           </section>
 
+          <div className="flex justify-center  ">
+            <div className="w-3/4 h-px bg-gray-300"></div>
+          </div>
+
+          {/* Toastmasters */}
+          <section id="toastmasters" className="scroll-mt-50 py-8">
+            <Card className="bg-white border-0 shadow-none">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl">
+                  <Wine className="w-5 h-5 sm:w-6 sm:h-6 " />
+                  Toastmasters
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p>
+                  Vi har två fantastiska toastmasters som heter Johanna Turfors
+                  och Otto Nilsson. Om ni vill komma i kontakt med dem så når ni
+                  dem på denna address:{" "}
+                  <a
+                    href="mailto:toastmaster@viktoria-isak.se"
+                    className="text-secondary underline"
+                  >
+                    toastmaster@viktoria-isak.se
+                  </a>
+                </p>
+              </CardContent>
+            </Card>
+          </section>
+
           <img
-            className="w-[90%] mx-auto rounded-lg shadow-lg h-auto"
+            className="w-[94%] mx-auto rounded-lg shadow-lg h-auto"
             src="/i&v/lake.jpg"
           ></img>
 
           {/* Kids */}
-          <section id="kids" className="scroll-mt-8 py-8  ">
+          <section id="kids" className="scroll-mt-60 py-8  ">
             <Card className="bg-white border-0 shadow-none">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl">
-                  <Baby className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
+                  <Baby className="w-5 h-5 sm:w-6 sm:h-6 " />
                   Barn
                 </CardTitle>
               </CardHeader>
@@ -328,7 +384,7 @@ export default function WeddingWebsite() {
             <Card className="bg-white border-0 shadow-none mb-10">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl">
-                  <Gift className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
+                  <Gift className="w-5 h-5 sm:w-6 sm:h-6 " />
                   Bröllopspresent
                 </CardTitle>
               </CardHeader>
